@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simple Internet Radio</title>
+<style>
+body {
+font-family: Arial, sans-serif;
+text-align: center;
+margin-top: 50px;
+}
+button {
+margin: 10px;
+padding: 10px 20px;
+font-size: 16px;
+}
+#track-name {
+margin-top: 20px;
+font-size: 20px;
+}
+</style>
+</head>
+<body>
+<h1>My Internet Radio</h1>
+<button id="play-pause">Play</button>
+<button id="next">Next</button>
+<button id="random">Random</button>
+<div id="track-name">Current Track: None</div>
+
+<script>
+
+const ws = new WebSocket('ws://localhost:3000');
+const playPauseButton = document.getElementById('play-pause');
+const nextButton = document.getElementById('next');
+const randomButton = document.getElementById('random');
+const trackNameDiv = document.getElementById('track-name');
+
+let isPlaying = false;
+let audio = new Audio();
+
+ws.onmessage = (event) => {
+    // const data = JSON.parse(event.data);
+    // if (data.type === 'track') {
+    //     trackNameDiv.textContent = `Current Track: ${data.trackName}`;
+    //     const blob = new Blob([data.audio], { type: 'audio/mp3' });
+    //     const url = URL.createObjectURL(blob);
+    //     audio.src = url;
+    //     if (isPlaying) {
+    //         audio.play();
+    //     }
+    // }
+    if (typeof event.data === 'string') {
+        const data = JSON.parse(event.data);
+        if (data.type === 'track') {
+            trackName = data.trackName;
+            trackNameDiv.textContent = `Current Track: ${trackName}`;
+        }
+        } else {
+            const blob = new Blob([event.data], { type: 'audio/mp3' });
+            const url = URL.createObjectURL(blob);
+            audio.src = url;
+            if (isPlaying) {
+                audio.play();
+            }
+    }
+};
+
+playPauseButton.addEventListener('click', () => {
+    isPlaying = !isPlaying;
+    playPauseButton.textContent = isPlaying ? 'Pause' : 'Play';
+    if (isPlaying) {
+        audio.play();
+    } else {
+        audio.pause();
+    }
+});
+
+nextButton.addEventListener('click', () => {
+    ws.send(JSON.stringify({ action: 'next' }));
+});
+
+randomButton.addEventListener('click', () => {
+    ws.send(JSON.stringify({ action: 'random' }));
+});
+</script>
+</body>
+</html>
