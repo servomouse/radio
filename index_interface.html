@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online Radio</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- <div class="radio-container">
+        <header>
+            <h1>StellarWave</h1>
+            <button id="theme-switcher">Switch Theme</button>
+        </header>
+        <main>
+            <div class="album-and-info">
+                <img id="album-cover" src="placeholder.jpg" alt="Album Cover">
+                <div class="track-info">
+                    <p id="artist-name">Artist Namerrrrrrrrrrrr</p>
+                    <p id="track-name">Track Name</p>
+                    <p id="album-name">Album Name</p>
+                    <div class="download-upload">
+                        <button id="download">⬇️</button>
+                        <button id="upload">⬆️</button>
+                    </div>
+                </div>
+            </div>
+            <div class="controls-and-volume">
+                <div class="controls">
+                    <button id="prev">⏮️</button>
+                    <button id="play">▶️</button>
+                    <button id="next">⏭️</button>
+                </div>
+                <div class="volume-control">
+                    <button id="mute">&#x1F50A;</button>
+                    <input type="range" id="volume" name="volume" min="0" max="100">
+                </div>
+            </div>
+        </main>
+        <footer><p>© 2024 StellarWave</p></footer>
+    </div>
+    <script src="script.js"></script> -->
+    <div class="radio-container">
+        <div class="top-box">
+          <div class="single-element">StellarWave</div>
+          <div class="single-element"><button id="theme-switcher" onclick="myFunction()">Switch Theme</button></div>
+        </div>
+        <div class="mid-box">
+          <img id="album-cover" src="placeholder.png" alt="Album Cover">  
+          <div class="flex-container">
+            <p id="artist-name">Artist Namerrrrrrrrrrrr</p>
+            <p id="track-name">Track Name</p>
+            <p id="album-name">Album Name</p>
+            <div class="download-upload">
+                <button id="download" class="single-element">⬇️</button>
+                <button id="upload" class="single-element">⬆️</button>
+            </div>
+            <!-- <div class="single-element">4.1</div>
+            <div class="single-element">4.2</div>  
+            <div class="single-element">4.3</div> -->
+          </div>
+        </div>
+        <div class="bot-box">
+            <div class="controls">
+                <button id="prev" title="Previous track">⏮️</button>
+                <button id="play" title="Play">▶️</button>
+                <button id="next" title="Next track">⏭️</button>
+            </div>
+            <div class="volume-control">
+                <button id="mute" title="Mute">&#x1F50A;</button>
+                <input type="range" id="volume" name="volume" min="0" max="100">
+            </div>
+          <!-- <div class="single-element">5</div>
+          <div class="single-element">6</div>  
+          <div class="single-element">7</div>
+          <div class="single-element">8</div> -->
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
