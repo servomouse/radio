@@ -27,3 +27,14 @@ isMuted = !isMuted;
 muteButton.textContent = isMuted ? '' : '';
 console.log('Muted:', isMuted);
 });
+
+function toggleTitle() {
+    console.log('toggleTitle()');
+    const checkbox = document.getElementById('theme-switcher');
+    const slider = document.querySelector('.slider');
+    if (checkbox.checked) {
+        slider.setAttribute('title', 'Switch to light mode');
+    } else {
+        slider.setAttribute('title', 'Switch to dark mode');
+    }
+}
