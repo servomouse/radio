@@ -42,11 +42,10 @@
     <script src="script.js"></script> -->
     <div class="radio-container">
         <div class="top-box">
-          <div class="single-element"><h1>StellarWave</h1></div>
-          <!-- <div class="single-element"><button id="theme-switcher">Switch Theme</button></div> -->
+          <div class="radio-name"><h1>StellarWave</h1></div>
           <label class="switch">
-            <input type="checkbox" id="theme-switcher" onclick="toggleTitle()">
-            <span class="slider" title="Switch to dark mode"></span>
+            <input type="checkbox" id="theme-switcher" onclick="toggleTheme()">
+            <span class="theme-slider" title="Switch to dark mode"></span>
           </label>
         </div>
         <div class="album-and-info">
@@ -56,19 +55,19 @@
             <p id="track-name">Track Name</p>
             <p id="album-name">Album Name</p>
             <div class="download-upload">
-                <button id="download" class="single-element">⬇️</button>
-                <button id="upload" class="single-element">⬆️</button>
+                <button id="download" class="custom-button download-button"></button>
+                <button id="upload" class="custom-button upload-button"></button>
             </div>
           </div>
         </div>
         <div class="controls-and-volume">
             <div class="controls">
-                <button id="prev" title="Previous track">⏮️</button>
-                <button id="play" title="Play">▶️</button>
-                <button id="next" title="Next track">⏭️</button>
+                <button id="prev" title="Previous track" class="custom-button prev-button"></button>
+                <button id="play" title="Play" class="custom-button play-button" onclick="togglePause()"></button>
+                <button id="next" title="Next track" class="custom-button next-button"></button>
             </div>
             <div class="volume-control">
-                <button id="mute" title="Mute">&#x1F50A;</button>
+                <button id="mute-button" title="Mute" class="custom-button mute-button" onclick="toggleMute()"></button>
                 <input type="range" id="volume" name="volume" min="0" max="100">
             </div>
         </div>
