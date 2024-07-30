@@ -55,19 +55,19 @@
             <p id="track-name">Track Name</p>
             <p id="album-name">Album Name</p>
             <div class="download-upload">
-                <button id="download" class="custom-button download-button"></button>
-                <button id="upload" class="custom-button upload-button"></button>
+                <button id="download" class="custom-button download-button" onmouseover="buttonHover(this)" onmouseout="buttonUnhover(this)"></button>
+                <button id="upload" class="custom-button upload-button" onmouseover="buttonHover(this)" onmouseout="buttonUnhover(this)"></button>
             </div>
           </div>
         </div>
         <div class="controls-and-volume">
             <div class="controls">
-                <button id="prev" title="Previous track" class="custom-button prev-button"></button>
-                <button id="play" title="Play" class="custom-button play-button" onclick="togglePause()"></button>
-                <button id="next" title="Next track" class="custom-button next-button"></button>
+                <button id="prev" title="Previous track" class="custom-button prev-button" onmouseover="buttonHover(this)" onmouseout="buttonUnhover(this)"></button>
+                <button id="play" title="Play" class="custom-button play-button" onclick="togglePause()" onmouseover="buttonHover(this)" onmouseout="buttonUnhover(this)"></button>
+                <button id="next" title="Next track" class="custom-button next-button" onmouseover="buttonHover(this)" onmouseout="buttonUnhover(this)"></button>
             </div>
             <div class="volume-control">
-                <button id="mute-button" title="Mute" class="custom-button mute-button" onclick="toggleMute()"></button>
+                <button id="mute-button" title="Mute" class="custom-button mute-button" onclick="toggleMute()" onmouseover="buttonHover(this)" onmouseout="buttonUnhover(this)"></button>
                 <input type="range" id="volume" name="volume" min="0" max="100">
             </div>
         </div>
