@@ -40,7 +40,7 @@ function toggleTheme() {
     if (checkbox.checked) {
         console.log('setting dark mode');
         buttons.forEach(button => {
-            // button.style.backgroundImage = "url('imgs/controls_dark_mode.png')";
+            button.style.backgroundImage = "url('imgs/controls_dark_mode.png')";
             button.style.backgroundColor = buttonBgDark;
         });
         slider.setAttribute('title', 'Switch to light mode');
@@ -48,7 +48,7 @@ function toggleTheme() {
     } else {
         console.log('setting light mode');
         buttons.forEach(button => {
-            // button.style.backgroundImage = "url('imgs/controls_light_mode.png')";
+            button.style.backgroundImage = "url('imgs/controls_light_mode.png')";
             button.style.backgroundColor = buttonBgLight;
         });
         slider.setAttribute('title', 'Switch to dark mode');
@@ -58,17 +58,21 @@ function toggleTheme() {
 
 function buttonHover(x) {
     if (document.getElementById('theme-switcher').checked) {    // Dark mode
-        x.style.backgroundColor = buttonBgDarkHover;
+        x.style.backgroundImage = "url('imgs/controls_dark_mode_hover.png')";
+        // x.style.backgroundColor = buttonBgDarkHover;
     } else {
-        x.style.backgroundColor = buttonBgLightHover;
+        // x.style.backgroundColor = buttonBgLightHover;
+        x.style.backgroundImage = "url('imgs/controls_light_mode_hover.png')";
     }
 }
 
 function buttonUnhover(x) {
     if (document.getElementById('theme-switcher').checked) {    // Dark mode
-        x.style.backgroundColor = buttonBgDark;
+        x.style.backgroundImage = "url('imgs/controls_dark_mode.png')";
+        // x.style.backgroundColor = buttonBgDark;
     } else {
-        x.style.backgroundColor = buttonBgLight;
+        // x.style.backgroundColor = buttonBgLight;
+        x.style.backgroundImage = "url('imgs/controls_light_mode.png')";
     }
 }
 
@@ -77,11 +81,11 @@ function toggleMute() {
     console.log('toggleMute()');
     const button = document.querySelector('.mute-button');
     if (isMuted) {
-        button.style.backgroundPosition = '-5px -97px';
+        button.style.backgroundPosition = '-4px -96px';
         // button.setAttribute('background-position', '-4px -96px');
         isMuted = false;
     } else {
-        button.style.backgroundPosition = '-51px -97px';
+        button.style.backgroundPosition = '-50px -96px';
         // button.setAttribute('background-position', '-50px -96px');
         isMuted = true;
     }
@@ -92,11 +96,11 @@ function togglePause() {
     console.log('toggleMute()');
     const button = document.querySelector('.play-button');
     if (isPaused) {
-        button.style.backgroundPosition = '-5px -5px';
+        button.style.backgroundPosition = '-4px -4px';
         // button.setAttribute('background-position', '-4px -96px');
         isPaused = false;
     } else {
-        button.style.backgroundPosition = '-51px -5px';
+        button.style.backgroundPosition = '-50px -4px';
         // button.setAttribute('background-position', '-50px -96px');
         isPaused = true;
     }
@@ -105,3 +109,23 @@ function togglePause() {
 window.onload = function() {
     document.querySelector('#theme-switcher').checked = false;
 }
+
+const bs = 43;  // Button size
+const bc = Math.ceil(buttonSize/2);   // Button center
+const bw = 3;  // Border width
+const column = [bw, (2 * bw) + bs];
+const row = [bw, (2 * bw) + bs, (3 * bw) + (2 * bs), (4 * bw) + (3 * bs)];
+const play_coords     = [row[0], column[0]];
+const pause_coords    = [row[0], column[1]];
+const next_coords     = [row[1], column[0]];
+const prev_coords     = [row[1], column[1]];
+const volume_coords   = [row[2], column[0]];
+const mute_coords     = [row[2], column[1]];
+const dounload_coords = [row[3], column[0]];
+const upload_coords   = [row[3], column[1]];
+// document.querySelector('#prev').style.backgroundPosition = `-${prev_coords[0]}px -${prev_coords[1]}px`;
+// document.querySelector('#play').style.backgroundPosition = `-${play_coords[0]}px -${play_coords[1]}px`;
+// document.querySelector('#next').style.backgroundPosition = `-${next_coords[0]}px -${next_coords[1]}px`;
+// document.querySelector('#mute-button').style.backgroundPosition = `-${volume_coords[0]}px -${volume_coords[1]}px`;
+// document.querySelector('#download').style.backgroundPosition = `-${dounload_coords[0]}px -${dounload_coords[1]}px`;
+// document.querySelector('#upload').style.backgroundPosition = `-${upload_coords[0]}px -${upload_coords[1]}px`;

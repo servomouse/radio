@@ -76,15 +76,12 @@ body.dark-theme .radio-container {
     flex-shrink: 0; /* Prevent shrinking */
 }
     
-.volume-control button {
-    /* background-color: #007bff; */
-    /* color: #fff; */
-    /* border: none; */
+/* .volume-control button {
     padding: 5px 10px;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
-}
+} */
 
 /* .volume-control button:hover {
     background-color: #0056b3;
@@ -160,51 +157,55 @@ footer p {
 
 .custom-button {
     border: 1px solid;
+    /* outline: 1px solid #000000; */
     box-shadow: 2px 2px 4px #000000;
     position: relative;
     margin: 10px;
     background-image: var(--button-bg-image);
-    background-size: cover;
+    /* background-size: cover; */
     background-color: var(--button-color);
     border-radius: 5px;
     cursor: pointer;
-    width: 42px;
-    height: 42px;
+    width: 44px;
+    height: 44px;
     background-size: 95px 233px;
     overflow: hidden;
-    transition: box-shadow 0.3s ease-in-out;
+    transition: box-shadow 0.9s ease-in-out, background-color 0.3s;
+    /* outline-offset:-1px; */
+    /* box-sizing: border-box; */
 }
 
 .custom-button:active {
     box-shadow: inset 2px 2px 4px #000000;
 }
 
-/* .custom-button:hover {
-    background-color: var(--button-hover-color);
-} */
+.custom-button:hover {
+    /* outline: 2px solid #000000; */
+    border: 2px solid;
+}
 
 .mute-button {
-    background-position: -5px -97px;
+    background-position: -4px -96px;
 }
 
 .prev-button {
-    background-position: -51px -51px;
+    background-position: -50px -50px;
 }
 
 .next-button {
-    background-position: -5px -51px;
+    background-position: -4px -50px;
 }
 
 .play-button {
-    background-position: -5px -5px;
+    background-position: -4px -4px;
 }
 
 .upload-button {
-    background-position: -51px -143px;
+    background-position: -50px -142px;
 }
 
 .download-button {
-    background-position: -5px -143px;
+    background-position: -4px -142px;
 }
 
 .switch {
