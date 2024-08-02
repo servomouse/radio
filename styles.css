@@ -166,8 +166,8 @@ footer p {
     background-color: var(--button-color);
     border-radius: 5px;
     cursor: pointer;
-    width: 44px;
-    height: 44px;
+    width: 43px;
+    height: 43px;
     background-size: 95px 233px;
     overflow: hidden;
     transition: box-shadow 0.9s ease-in-out, background-color 0.3s;
@@ -179,10 +179,9 @@ footer p {
     box-shadow: inset 2px 2px 4px #000000;
 }
 
-.custom-button:hover {
-    /* outline: 2px solid #000000; */
+/* .custom-button:hover {
     border: 2px solid;
-}
+} */
 
 .mute-button {
     background-position: -4px -96px;
@@ -206,6 +205,10 @@ footer p {
 
 .download-button {
     background-position: -4px -142px;
+}
+
+.rand-button {
+    background-position: -50px -188px;
 }
 
 .switch {

@@ -7,39 +7,6 @@
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- <div class="radio-container">
-        <header>
-            <h1>StellarWave</h1>
-            <button id="theme-switcher">Switch Theme</button>
-        </header>
-        <main>
-            <div class="album-and-info">
-                <img id="album-cover" src="placeholder.jpg" alt="Album Cover">
-                <div class="track-info">
-                    <p id="artist-name">Artist Namerrrrrrrrrrrr</p>
-                    <p id="track-name">Track Name</p>
-                    <p id="album-name">Album Name</p>
-                    <div class="download-upload">
-                        <button id="download">⬇️</button>
-                        <button id="upload">⬆️</button>
-                    </div>
-                </div>
-            </div>
-            <div class="controls-and-volume">
-                <div class="controls">
-                    <button id="prev">⏮️</button>
-                    <button id="play">▶️</button>
-                    <button id="next">⏭️</button>
-                </div>
-                <div class="volume-control">
-                    <button id="mute">&#x1F50A;</button>
-                    <input type="range" id="volume" name="volume" min="0" max="100">
-                </div>
-            </div>
-        </main>
-        <footer><p>© 2024 StellarWave</p></footer>
-    </div>
-    <script src="script.js"></script> -->
     <div class="radio-container">
         <div class="top-box">
           <div class="radio-name"><h1>StellarWave</h1></div>
@@ -65,6 +32,7 @@
                 <button id="prev" title="Previous track" class="custom-button prev-button" onmouseover="buttonHover(this)" onmouseout="buttonUnhover(this)"></button>
                 <button id="play" title="Play" class="custom-button play-button" onclick="togglePause()" onmouseover="buttonHover(this)" onmouseout="buttonUnhover(this)"></button>
                 <button id="next" title="Next track" class="custom-button next-button" onmouseover="buttonHover(this)" onmouseout="buttonUnhover(this)"></button>
+                <button id="rand" title="Random track" class="custom-button rand-button" onmouseover="buttonHover(this)" onmouseout="buttonUnhover(this)" onclick="toggleRandom(this)"></button>
             </div>
             <div class="volume-control">
                 <button id="mute-button" title="Mute" class="custom-button mute-button" onclick="toggleMute()" onmouseover="buttonHover(this)" onmouseout="buttonUnhover(this)"></button>

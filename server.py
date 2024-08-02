@@ -3,6 +3,7 @@ import websockets
 import json
 import os
 import random
+import queue
 
 tracks = [
     {"name": "Track 1", "file": "tracks/JQSQ.mp3"},
@@ -11,6 +12,8 @@ tracks = [
     {"name": "Track 4", "file": "tracks/TFUQ.mp3"}
 ]
 current_track_index = 0
+is_random = False
+history = queue.LifoQueue(128)
 
 async def send_track(websocket):
     global current_track_index
@@ -27,15 +30,39 @@ async def send_track(websocket):
         await websocket.send(audio_data)  # Send audio data as binary
 
 async def handler(websocket, path):
-    global current_track_index
+    global current_track_index, is_random
     await send_track(websocket)
     async for message in websocket:
         command = json.loads(message)
         if command["action"] == "next":
-            current_track_index = (current_track_index + 1) % len(tracks)
+            print("Received next command")
+            history.put(current_track_index)
+            if is_random:
+                current_track_index = random.randint(0, len(tracks) - 1)
+            else:
+                current_track_index = (current_track_index + 1) % len(tracks)
+            await send_track(websocket)
+        if command["action"] == "prev":
+            print("Received prev command")
+            if history.empty():
+                if is_random:
+                    current_track_index = random.randint(0, len(tracks) - 1)
+                else:
+                    if current_track_index == 0:
+                        current_track_index = len(tracks)
+                    current_track_index -= 1
+                    # current_track_index = (current_track_index + 1) % len(tracks)
+            else:
+                current_track_index = history.get()
+            await send_track(websocket)
         elif command["action"] == "random":
-            current_track_index = random.randint(0, len(tracks) - 1)
-        await send_track(websocket)
+            print("Received rand command")
+            is_random = True
+        elif command["action"] == "straight":
+            print("Received straight command")
+            is_random = False
+            # current_track_index = random.randint(0, len(tracks) - 1)
+        # await send_track(websocket)
 
 print(os.listdir('tracks'))
 start_server = websockets.serve(handler, "localhost", 3000)

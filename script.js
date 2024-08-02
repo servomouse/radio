@@ -5,7 +5,9 @@
 
 // Placeholder for future volume control functionality
 document.getElementById('volume').addEventListener('input', function() {
-    console.log('Volume level:', this.value);
+    let val = this.value/100;
+    console.log('Volume level:', val);
+    audio.volume = val;
 });
 
 
@@ -26,6 +28,21 @@ function updateAlbumCover(imageUrl) {
 // muteButton.textContent = isMuted ? '' : '';
 // console.log('Muted:', isMuted);
 // });
+
+let randomToggled = false;
+
+function toggleRandom(x) {
+    console.log('toggleRandom()');
+    // const randButton = document.querySelectorAll('.rand-button');
+    randomToggled = !randomToggled;
+    if (randomToggled) {
+        ws.send(JSON.stringify({ action: 'random' }));
+        x.style.backgroundPosition = "-4px -188px";     // Not random
+    } else {
+        ws.send(JSON.stringify({ action: 'straight' }));
+        x.style.backgroundPosition = "-50px -188px";    // Random
+    }
+}
 
 const buttonBgLight = "#e4e4e4";
 const buttonBgLightHover = "#0056b3";
@@ -58,11 +75,11 @@ function toggleTheme() {
 
 function buttonHover(x) {
     if (document.getElementById('theme-switcher').checked) {    // Dark mode
-        x.style.backgroundImage = "url('imgs/controls_dark_mode_hover.png')";
+        x.style.backgroundImage = "url('imgs/controls_hover.png')";
         // x.style.backgroundColor = buttonBgDarkHover;
     } else {
         // x.style.backgroundColor = buttonBgLightHover;
-        x.style.backgroundImage = "url('imgs/controls_light_mode_hover.png')";
+        x.style.backgroundImage = "url('imgs/controls_hover.png')";
     }
 }
 
@@ -110,22 +127,62 @@ window.onload = function() {
     document.querySelector('#theme-switcher').checked = false;
 }
 
-const bs = 43;  // Button size
-const bc = Math.ceil(buttonSize/2);   // Button center
-const bw = 3;  // Border width
-const column = [bw, (2 * bw) + bs];
-const row = [bw, (2 * bw) + bs, (3 * bw) + (2 * bs), (4 * bw) + (3 * bs)];
-const play_coords     = [row[0], column[0]];
-const pause_coords    = [row[0], column[1]];
-const next_coords     = [row[1], column[0]];
-const prev_coords     = [row[1], column[1]];
-const volume_coords   = [row[2], column[0]];
-const mute_coords     = [row[2], column[1]];
-const dounload_coords = [row[3], column[0]];
-const upload_coords   = [row[3], column[1]];
-// document.querySelector('#prev').style.backgroundPosition = `-${prev_coords[0]}px -${prev_coords[1]}px`;
-// document.querySelector('#play').style.backgroundPosition = `-${play_coords[0]}px -${play_coords[1]}px`;
-// document.querySelector('#next').style.backgroundPosition = `-${next_coords[0]}px -${next_coords[1]}px`;
-// document.querySelector('#mute-button').style.backgroundPosition = `-${volume_coords[0]}px -${volume_coords[1]}px`;
-// document.querySelector('#download').style.backgroundPosition = `-${dounload_coords[0]}px -${dounload_coords[1]}px`;
-// document.querySelector('#upload').style.backgroundPosition = `-${upload_coords[0]}px -${upload_coords[1]}px`;
+
+const ws = new WebSocket('ws://localhost:3000');
+const playPauseButton = document.getElementById('play');
+const nextButton = document.getElementById('next');
+const prevButton = document.getElementById('prev');
+// const randomButton = document.getElementById('random');
+const trackNameDiv = document.getElementById('track-name');
+
+let isPlaying = false;
+let audio = new Audio();
+
+ws.onmessage = (event) => {
+    if (typeof event.data === 'string') {
+        const data = JSON.parse(event.data);
+        if (data.type === 'track') {
+            trackName = data.trackName;
+            trackNameDiv.textContent = `Current Track: ${trackName}`;
+        }
+        } else {
+            const blob = new Blob([event.data], { type: 'audio/mp3' });
+            const url = URL.createObjectURL(blob);
+            audio.src = url;
+            if (isPlaying) {
+                audio.play();
+            }
+    }
+};
+
+playPauseButton.addEventListener('click', () => {
+    isPlaying = !isPlaying;
+    // playPauseButton.textContent = isPlaying ? 'Pause' : 'Play';
+    if (isPlaying) {
+        audio.play();
+    } else {
+        audio.pause();
+    }
+});
+
+nextButton.addEventListener('click', () => {
+    ws.send(JSON.stringify({ action: 'next' }));
+});
+
+prevButton.addEventListener('click', () => {
+    ws.send(JSON.stringify({ action: 'prev' }));
+});
+
+// randomButton.addEventListener('click', () => {
+//     ws.send(JSON.stringify({ action: 'random' }));
+// });
+
+audio.addEventListener('ended', function() {
+    ws.send(JSON.stringify({ action: 'next' }));
+})
+
+audio.addEventListener('timeupdate', function() {
+    if (audio.currentTime/audio.duration >= 0.9) {
+        console.log(`The audio is 90% played ${audio.currentTime}`);
+    }
+})
