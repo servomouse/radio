@@ -40,16 +40,6 @@ let isPlaying = false;
 let audio = new Audio();
 
 ws.onmessage = (event) => {
-    // const data = JSON.parse(event.data);
-    // if (data.type === 'track') {
-    //     trackNameDiv.textContent = `Current Track: ${data.trackName}`;
-    //     const blob = new Blob([data.audio], { type: 'audio/mp3' });
-    //     const url = URL.createObjectURL(blob);
-    //     audio.src = url;
-    //     if (isPlaying) {
-    //         audio.play();
-    //     }
-    // }
     if (typeof event.data === 'string') {
         const data = JSON.parse(event.data);
         if (data.type === 'track') {

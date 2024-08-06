@@ -4,6 +4,30 @@ import json
 import os
 import random
 import queue
+from mutagen.mp3 import MP3
+from mutagen.id3 import ID3, TIT2, TPE1, TALB, APIC
+
+
+def get_text(tag):
+    if isinstance(tag, (TIT2, TPE1, TALB)):
+        return str(tag)
+    return tag
+
+
+def get_metadata(file_path):
+    audio = MP3(file_path, ID3=ID3)
+    metadata = {
+        "type": "meta",
+        'title': get_text(audio.get("TIT2", 'Unknown_title')),
+        'artist': get_text(audio.get("TPE1", 'Unknown artist')),
+        'album': get_text(audio.get("TALB", 'Unknown Album')),
+        'album_cover': None
+    }
+    print(metadata)
+    if "APIC" in audio:
+        metadata['album_cover'] = audio["APIC"].data
+    return metadata
+
 
 tracks = [
     {"name": "Track 1", "file": "tracks/JQSQ.mp3"},
@@ -18,15 +42,17 @@ history = queue.LifoQueue(128)
 async def send_track(websocket):
     global current_track_index
     track = tracks[current_track_index]
+    metadata = get_metadata(track["file"])
     with open(track["file"], "rb") as f:
         audio_data = f.read()
         message = json.dumps({
         "type": "track",
         "trackName": track["name"],
-        # "audio": audio_data.decode('latin1')  # Convert binary data to string
+        "audio": audio_data.decode('latin1')  # Convert binary data to string
         })
         print(f"Sending track {track['name']}")
-        await websocket.send(message)
+        # await websocket.send(message)
+        await websocket.send(json.dumps(metadata))
         await websocket.send(audio_data)  # Send audio data as binary
 
 async def handler(websocket, path):

@@ -110,7 +110,7 @@ function toggleMute() {
 
 let isPaused = false;
 function togglePause() {
-    console.log('toggleMute()');
+    console.log('togglePlay()');
     const button = document.querySelector('.play-button');
     if (isPaused) {
         button.style.backgroundPosition = '-4px -4px';
@@ -137,6 +137,7 @@ const trackNameDiv = document.getElementById('track-name');
 
 let isPlaying = false;
 let audio = new Audio();
+audio.volume = 0.2;
 
 ws.onmessage = (event) => {
     if (typeof event.data === 'string') {
@@ -144,16 +145,29 @@ ws.onmessage = (event) => {
         if (data.type === 'track') {
             trackName = data.trackName;
             trackNameDiv.textContent = `Current Track: ${trackName}`;
-        }
-        } else {
-            const blob = new Blob([event.data], { type: 'audio/mp3' });
-            const url = URL.createObjectURL(blob);
-            audio.src = url;
-            if (isPlaying) {
-                audio.play();
+        } else if (data.type === 'meta') {
+            document.getElementById('artist-name').textContent = data.artist;
+            document.getElementById('track-name').textContent = data.title;
+            document.getElementById('album-name').textContent = data.album;
+            if (data.album_cover) {
+                setAlbumCover(data.album_cover);
             }
+        }
+    } else {
+        const blob = new Blob([event.data], { type: 'audio/mp3' });
+        const url = URL.createObjectURL(blob);
+        audio.src = url;
+        if (isPlaying) {
+            audio.play();
+        }
     }
 };
+
+function setAlbumCover(imageData) {
+    const base64String = btoa(String.fromCharCode(...new Uint8Array(imageData)));
+    const imgSrc = `data:image/jpeg;base64,${base64String}`;
+    document.getElementById('album-cover').src = imgSrc;
+}
 
 playPauseButton.addEventListener('click', () => {
     isPlaying = !isPlaying;
