@@ -5,6 +5,7 @@
 
 // Placeholder for future volume control functionality
 document.getElementById('volume').addEventListener('input', function() {
+    this.title = this.value;
     let val = this.value/100;
     console.log('Volume level:', val);
     audio.volume = val;
@@ -36,10 +37,10 @@ function toggleRandom(x) {
     // const randButton = document.querySelectorAll('.rand-button');
     randomToggled = !randomToggled;
     if (randomToggled) {
-        ws.send(JSON.stringify({ action: 'random' }));
+        wsSendData(JSON.stringify({ action: 'random' }));
         x.style.backgroundPosition = "-4px -188px";     // Not random
     } else {
-        ws.send(JSON.stringify({ action: 'straight' }));
+        wsSendData(JSON.stringify({ action: 'straight' }));
         x.style.backgroundPosition = "-50px -188px";    // Random
     }
 }
@@ -81,6 +82,11 @@ function buttonHover(x) {
         // x.style.backgroundColor = buttonBgLightHover;
         x.style.backgroundImage = "url('imgs/controls_hover.png')";
     }
+}
+
+function volumeHover(x) {
+    const volume = document.getElementById('volume').value;
+    x.title = `${volume}`;
 }
 
 function buttonUnhover(x) {
@@ -128,7 +134,6 @@ window.onload = function() {
 }
 
 
-const ws = new WebSocket('ws://localhost:3000');
 const playPauseButton = document.getElementById('play');
 const nextButton = document.getElementById('next');
 const prevButton = document.getElementById('prev');
@@ -138,30 +143,52 @@ const trackNameDiv = document.getElementById('track-name');
 let isPlaying = false;
 let audio = new Audio();
 audio.volume = 0.2;
+document.getElementById('volume').value = 20;
 
-ws.onmessage = (event) => {
-    if (typeof event.data === 'string') {
-        const data = JSON.parse(event.data);
-        if (data.type === 'track') {
-            trackName = data.trackName;
-            trackNameDiv.textContent = `Current Track: ${trackName}`;
-        } else if (data.type === 'meta') {
-            document.getElementById('artist-name').textContent = data.artist;
-            document.getElementById('track-name').textContent = data.title;
-            document.getElementById('album-name').textContent = data.album;
-            if (data.album_cover) {
-                setAlbumCover(data.album_cover);
+// const ws = new WebSocket('ws://localhost:3000');
+let ws;
+
+function wsConnect() {
+    ws = new WebSocket('ws://localhost:3000');
+
+    ws.onopen = function() {
+        console.log("Connected to the server");
+    };
+
+    ws.onclose = function() {
+        console.log("Connection lost, reconnect in 1 second");
+        setTimeout(wsConnect, 1000);
+    };
+
+    ws.onerror = function(error) {
+        console.error("WebSocket error: ", error);
+        ws.close();
+    };
+
+    ws.onmessage = (event) => {
+        if (typeof event.data === 'string') {
+            const data = JSON.parse(event.data);
+            if (data.type === 'track') {
+                trackName = data.trackName;
+                trackNameDiv.textContent = `Current Track: ${trackName}`;
+            } else if (data.type === 'meta') {
+                document.getElementById('artist-name').textContent = data.artist;
+                document.getElementById('track-name').textContent = data.title;
+                document.getElementById('album-name').textContent = data.album;
+                if (data.album_cover) {
+                    setAlbumCover(data.album_cover);
+                }
+            }
+        } else {
+            const blob = new Blob([event.data], { type: 'audio/mp3' });
+            const url = URL.createObjectURL(blob);
+            audio.src = url;
+            if (isPlaying) {
+                audio.play();
             }
         }
-    } else {
-        const blob = new Blob([event.data], { type: 'audio/mp3' });
-        const url = URL.createObjectURL(blob);
-        audio.src = url;
-        if (isPlaying) {
-            audio.play();
-        }
-    }
-};
+    };
+}
 
 function setAlbumCover(imageData) {
     const base64String = btoa(String.fromCharCode(...new Uint8Array(imageData)));
@@ -180,19 +207,19 @@ playPauseButton.addEventListener('click', () => {
 });
 
 nextButton.addEventListener('click', () => {
-    ws.send(JSON.stringify({ action: 'next' }));
+    wsSendData(JSON.stringify({ action: 'next' }));
 });
 
 prevButton.addEventListener('click', () => {
-    ws.send(JSON.stringify({ action: 'prev' }));
+    wsSendData(JSON.stringify({ action: 'prev' }));
 });
 
 // randomButton.addEventListener('click', () => {
-//     ws.send(JSON.stringify({ action: 'random' }));
+//     wsSendData(JSON.stringify({ action: 'random' }));
 // });
 
 audio.addEventListener('ended', function() {
-    ws.send(JSON.stringify({ action: 'next' }));
+    wsSendData(JSON.stringify({ action: 'next' }));
 })
 
 audio.addEventListener('timeupdate', function() {
@@ -200,3 +227,11 @@ audio.addEventListener('timeupdate', function() {
         console.log(`The audio is 90% played ${audio.currentTime}`);
     }
 })
+
+function wsSendData(data) {
+    if (ws instanceof WebSocket && ws.readyState === WebSocket.OPEN) {
+        ws.send(data);
+    }
+}
+
+wsConnect();
