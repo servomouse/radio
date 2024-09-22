@@ -1,0 +1,338 @@
+:root {
+    --bg-color: #e4e4e4;
+    --fg-color: #333;
+    --button-color: #e4e4e4;
+    /* --button-hover-color: #0056b3; */
+    --button-bg-image: url('imgs/controls_light_mode.png');
+}
+
+/* body.light-theme {
+    --bg-color: #e4e4e4;
+    --fg-color: #333;
+    --button-color: #e4e4e4;
+    --button-hover-color: #0056b3;
+    --button-bg-image: url('imgs/controls_light_mode.png');
+} */
+
+body.dark-theme {
+    --bg-color: #333;
+    --fg-color: #e4e4e4;
+    /* --button-color: #444; */
+    /* --button-hover-color: #0056b3; */
+    --button-bg-image: url('imgs/controls_dark_mode.png');
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    transition: background-color 0.3s, color 0.3s;
+    background-color: var(--bg-color);
+    color: var(--fg-color);
+}
+
+.radio-container {
+    background-color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    height: fit-content;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding: 20px;
+    transition: background-color 0.3s, color 0.3s;
+    box-sizing: border-box; /* Ensure padding is included in the width */
+}
+
+body.dark-theme .radio-container {
+    background-color: #444;
+    color: #e4e4e4;
+}
+
+.download-upload {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+    
+.controls {
+    display: flex;
+    justify-content: center;
+}
+
+.controls button {
+    /* border: none; */
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+.volume-control {
+    display: flex;
+    /* flex-direction: column; */
+    align-items: center;
+    margin-left: 20px; /* Add margin to separate from controls */
+    flex-shrink: 0; /* Prevent shrinking */
+}
+    
+/* .volume-control button {
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+} */
+
+/* .volume-control button:hover {
+    background-color: #0056b3;
+} */
+    
+.volume-control input[type="range"] {
+    width: 100px; /* Adjusted width */
+    max-width: 100%; /* Ensure it doesn't overflow */
+}
+
+footer p {
+    font-size: 12px;
+    margin: 20px 0 0;
+}
+
+.track-info {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    text-align: left;
+}
+
+.track-info p {
+    padding-left: 10px;
+}
+
+.top-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.top-box h1 {
+    margin: 0;
+    font-size: 25px;
+}
+
+.album-and-info {
+    display: flex;
+    align-items: stretch;
+}
+
+.album-and-info img {
+    max-width: 200px;
+    border-radius: 10px;
+    aspect-ratio : 1 / 1;
+    margin: 10px;
+    background-color: lightblue;
+    text-align: center;
+    line-height: 75px;
+    font-size: 30px;
+    display: grid;
+    align-items: center;
+}
+    
+.controls-and-volume {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 5px;
+}
+
+.radio-name {
+    margin: 10px;
+    width: fit-content;
+    height: fit-content;
+    text-align: center;
+    font-size: 30px;
+    display: grid;
+    align-items: center;
+}
+
+.custom-button {
+    border: 1px solid;
+    /* outline: 1px solid #000000; */
+    box-shadow: 2px 2px 4px #000000;
+    position: relative;
+    margin: 10px;
+    background-image: var(--button-bg-image);
+    /* background-size: cover; */
+    background-color: var(--button-color);
+    border-radius: 5px;
+    cursor: pointer;
+    width: 43px;
+    height: 43px;
+    background-size: 95px 233px;
+    overflow: hidden;
+    transition: box-shadow 0.9s ease-in-out, background-color 0.3s;
+    /* outline-offset:-1px; */
+    /* box-sizing: border-box; */
+}
+
+.custom-button:active {
+    box-shadow: inset 2px 2px 4px #000000;
+}
+
+/* .custom-button:hover {
+    border: 2px solid;
+} */
+
+.mute-button {
+    background-position: -4px -96px;
+}
+
+.prev-button {
+    background-position: -50px -50px;
+}
+
+.next-button {
+    background-position: -4px -50px;
+}
+
+.play-button {
+    background-position: -4px -4px;
+}
+
+.upload-button {
+    background-position: -50px -142px;
+}
+
+.download-button {
+    background-position: -4px -142px;
+}
+
+.rand-button {
+    background-position: -50px -188px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 42px;
+    height: 24px;
+}
+
+.switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.theme-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .3s;
+    transition: .3s;
+    border-radius: 24px;
+}
+
+.theme-slider:before {
+    content: "";
+    position: absolute;
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    -webkit-transition: .3s;
+    transition: .3s;
+    border-radius: 50%;
+}
+
+input:checked + .theme-slider {
+    background-color: #2196F3;
+}
+
+input:checked + .theme-slider:before {
+    -webkit-transform: translateX(18px);
+    -ms-transform: translateX(18px);
+    transform: translateX(18px);
+}
+
+/* From temp: */
+
+.file-buttons {
+    display: flex;
+    width: 300px;
+    justify-content: space-evenly;
+    margin-bottom: 10px;
+    /* flex-direction: column; */
+}
+.playlist-container {
+    width: 300px; /* Adjust the width as needed */
+    min-height: 100px;
+    max-height: 500px; /* Adjust the height to show 5 items */
+    overflow-y: scroll;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.playlist-item {
+    height: 70px; /* Adjust the height of each item */
+    width: 99%;
+    margin-bottom: 10px;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ddd;
+    cursor: move;
+    position: relative;
+}
+.playlist-item-name {
+    flex: 1;
+    padding-left: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.playlist-item .play-button {
+    display: none;
+    margin-left: 10px;
+    /* position: absolute;
+    left: 10px; */
+    cursor: pointer;
+}
+.playlist-item .delete-button {
+    display: none;
+    margin-right: 10px;
+    /* position: absolute;
+    right: 10px; */
+    cursor: pointer;
+}
+.playlist-item:hover button {
+    display: block;
+}
+.playlist-item:hover {
+    background-color: #2e3c6c;
+    transition: 250ms;
+}
+/* Button-plus style: */
+.button-plus {
+  background: #fff;
+  cursor: pointer;
+  border: 2px solid #095776;
+  text-align: center;
+  width: 100px;
+  margin-bottom: 10px;
+}
+
+
+.button-plus:hover {
+  background-color: #095776;
+  transition: 0.2s;
+}

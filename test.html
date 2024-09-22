@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Draggable Playlist</title>
+<link rel="stylesheet" href="new_styles.css">
+</head>
+<body>
+    <!-- <div class="file-buttons">
+        <button id="open-folder" onclick="openFiles()">Open folder</button>
+        <button id="print-playlist" onclick="printPlayList()">Print playlist</button>
+        <button id="print-playlist" onclick="addItem()">Add item</button>
+    </div> -->
+    <!-- <ul id="file-list"></ul> -->
+    <!-- <audio id="audio-player" controls></audio> -->
+    <div class="playlist-container" id="playlist">
+        <div class="button-plus" onclick="openFiles()">Add files</div>
+        <!-- <div class="playlist-item" draggable="true">
+            <button class="play-button">Play</button>
+            <div class="playlist-item-name" >Long Item Name Lalalalalalalalala</div>
+            <button class="delete-button">Delete</button>
+        </div> -->
+        <!-- <div class="playlist-item" draggable="true">Item 2</div>
+        <div class="playlist-item" draggable="true">Item 3</div>
+        <div class="playlist-item" draggable="true">Item 4</div>
+        <div class="playlist-item" draggable="true">Item 5</div>
+        <div class="playlist-item" draggable="true">Item 6</div>
+        <div class="playlist-item" draggable="true">Item 7</div>
+        <div class="playlist-item" draggable="true">Item 8</div>
+        <div class="playlist-item" draggable="true">Item 9</div>
+        <div class="playlist-item" draggable="true">Item 10</div>
+        <div class="playlist-item" draggable="true">Item 11</div>
+        <div class="playlist-item" draggable="true">Item 12</div>
+        <div class="playlist-item" draggable="true">Item 13</div>
+        <div class="playlist-item" draggable="true">Item 14</div>
+        <div class="playlist-item" draggable="true">Item 15</div> -->
+    </div>
+    <div class="radio-container">
+        <div class="top-box">
+          <div class="radio-name"><h1>StellarWave</h1></div>
+          <label class="switch">
+            <input type="checkbox" id="theme-switcher" onclick="toggleTheme()">
+            <span class="theme-slider" title="Switch to dark mode"></span>
+          </label>
+        </div>
+        <div class="album-and-info">
+          <img id="album-cover" src="placeholder.png" alt="Album Cover">  
+          <div class="track-info">
+            <p id="artist-name">Artist Namerrrrrrrrrrrr</p>
+            <p id="track-name">Track Name</p>
+            <p id="album-name">Album Name</p>
+            <!-- <div class="download-upload">
+                <button id="download" class="custom-button download-button" onmouseover="buttonHover(this)" onmouseout="buttonUnhover(this)"></button>
+                <button id="upload" class="custom-button upload-button" onmouseover="buttonHover(this)" onmouseout="buttonUnhover(this)"></button>
+            </div> -->
+          </div>
+        </div>
+        <div class="controls-and-volume">
+            <div class="controls">
+                <button id="prev" title="Previous track" class="custom-button prev-button" onmouseover="buttonHover(this)" onmouseout="buttonUnhover(this)"></button>
+                <button id="play" title="Play" class="custom-button play-button" onclick="togglePause()" onmouseover="buttonHover(this)" onmouseout="buttonUnhover(this)"></button>
+                <button id="next" title="Next track" class="custom-button next-button" onmouseover="buttonHover(this)" onmouseout="buttonUnhover(this)" onclick="nextTrack()"></button>
+                <button id="rand" title="Random track" class="custom-button rand-button" onmouseover="buttonHover(this)" onmouseout="buttonUnhover(this)" onclick="toggleRandom(this)"></button>
+            </div>
+            <div class="volume-control">
+                <button id="mute-button" title="Mute" class="custom-button mute-button" onclick="toggleMute()" onmouseover="buttonHover(this)" onmouseout="buttonUnhover(this)"></button>
+                <input type="range" id="volume" name="volume" min="0" max="100" title="Volume" onmouseover="volumeHover(this)">
+            </div>
+        </div>
+    </div>
+
+<script src="new_script.js"></script>
+</body>
+</html>
