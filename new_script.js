@@ -112,17 +112,30 @@ function toggleMute() {
 }
 
 let isPaused = false;
+let isStarted = false;
 function togglePause() {
-    console.log('togglePlay()');
     const button = document.querySelector('.play-button');
-    if (isPaused) {
-        button.style.backgroundPosition = '-4px -4px';
-        // button.setAttribute('background-position', '-4px -96px');
-        isPaused = false;
-    } else {
+    if (audio.paused) {
+        console.log('Play');
+        if(!isStarted) {
+            const files = getCurrentOrder();
+            currentlyPlaying = files[0];
+            const newFile = filesList[currentlyPlaying];
+            const url = URL.createObjectURL(newFile);
+            audio.src = url;
+            audio.play();
+            isStarted = true;
+        }
         button.style.backgroundPosition = '-50px -4px';
+        // button.setAttribute('background-position', '-4px -96px');
+        // isPaused = false;
+        audio.play();
+    } else {
+        console.log('Pause');
+        button.style.backgroundPosition = '-4px -4px';
         // button.setAttribute('background-position', '-50px -96px');
-        isPaused = true;
+        // isPaused = true;
+        audio.pause();
     }
 }
 
@@ -190,15 +203,15 @@ function setAlbumCover(imageData) {
     document.getElementById('album-cover').src = imgSrc;
 }
 
-playPauseButton.addEventListener('click', () => {
-    isPlaying = !isPlaying;
-    // playPauseButton.textContent = isPlaying ? 'Pause' : 'Play';
-    if (isPlaying) {
-        audio.play();
-    } else {
-        audio.pause();
-    }
-});
+// playPauseButton.addEventListener('click', () => {
+//     isPlaying = !isPlaying;
+//     // playPauseButton.textContent = isPlaying ? 'Pause' : 'Play';
+//     if (isPlaying) {
+//         audio.play();
+//     } else {
+//         audio.pause();
+//     }
+// });
 
 // nextButton.addEventListener('click', () => {
 //     // wsSendData(JSON.stringify({ action: 'next' }));
@@ -207,16 +220,16 @@ playPauseButton.addEventListener('click', () => {
 function nextTrack() {
     const files = getCurrentOrder();
     const index = files.indexOf(currentlyPlaying);
-    console.log(currentlyPlaying);
-    console.log(files);
+    // console.log(currentlyPlaying);
+    // console.log(files);
     if(index+1 < files.length) {
         currentlyPlaying = files[index+1];
     } else {
         currentlyPlaying = files[0];
     }
     const newFile = filesList[currentlyPlaying];
-    console.log(currentlyPlaying);
-    console.log(newFile);
+    // console.log(currentlyPlaying);
+    // console.log(newFile);
     const url = URL.createObjectURL(newFile);
     // const audioPlayer = document.getElementById('audio-player');
     audio.src = url;
@@ -254,7 +267,7 @@ audio.addEventListener('ended', function() {
 })
 
 audio.addEventListener('timeupdate', function() {
-    if (audio.currentTime/audio.duration >= 0.9) {
+    if (audio.currentTime/audio.duration == 0.9) {
         console.log(`The audio is 90% played ${audio.currentTime}`);
     }
 })
@@ -330,13 +343,14 @@ function addItem(itemName, file) {
     // newItem.textContent = itemName;
     newItem.draggable = true;
     const itemPlay = document.createElement('button');
-    itemPlay.className = "play-button";
+    itemPlay.className = "playlist-play-button";
     itemPlay.innerHTML = "Play";
     itemPlay.addEventListener('click', () => {
         const url = URL.createObjectURL(file);
         console.log(file);
         // const audioPlayer = document.getElementById('audio-player');
         audio.src = url;
+        isStarted = true;
         audio.play();
         currentlyPlaying = itemName;
     });
@@ -346,6 +360,9 @@ function addItem(itemName, file) {
     const itemDelete = document.createElement('button');
     itemDelete.className = "delete-button";
     itemDelete.innerHTML = "Delete";
+    itemDelete.addEventListener('click', () => {
+        document.getElementById('playlist').appendChild(newItem);
+    });
     newItem.appendChild(itemPlay);
     newItem.appendChild(itemText);
     newItem.appendChild(itemDelete);
